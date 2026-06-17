@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal DRM Web Player</title>
+    
+    <!-- Google Fonts for sleek typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Shaka Player JS & CSS (Hosted on CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.11/shaka-player.ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.11/controls.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Configuration Panel -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>📺 Stream Config</h2>
+                <p>Paste your extracted DRM data below to start streaming.</p>
+            </div>
+            
+            <form id="configForm">
+                <div class="form-group">
+                    <label for="streamUrl">Manifest URL (.mpd / .m3u8)</label>
+                    <input type="text" id="streamUrl" placeholder="https://example.com/stream/index.mpd" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="headers">Custom Headers / Cookies (Optional)</label>
+                    <textarea id="headers" placeholder="Cookie: __hdnea__=st=...&#10;User-Agent: plaYtv/7.1.5..." rows="3"></textarea>
+                    <span class="help-text">One header per line (Format: Key: Value)</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="drmKeys">ClearKey DRM (Optional)</label>
+                    <textarea id="drmKeys" placeholder="965dc2ddb1d85138ad787999a7f30ca5:859695076e67fe961836b564db6d689c" rows="2"></textarea>
+                    <span class="help-text">Format: KID:KEY (One pair per line)</span>
+                </div>
+
+                <button type="submit" id="playBtn" class="primary-btn">▶ Play Stream</button>
+            </form>
+            
+            <div id="statusMessage" class="status-msg hidden"></div>
+        </aside>
+
+        <!-- Video Player Area -->
+        <main class="player-area">
+            <div id="videoContainer" class="shaka-video-container" data-shaka-player-container>
+                <video id="video" data-shaka-player autoplay></video>
+            </div>
+        </main>
+    </div>
+
+    <!-- Application Logic -->
+    <script src="player.js"></script>
+</body>
+</html>
