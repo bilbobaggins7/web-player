@@ -100,25 +100,25 @@ async function onPlayStream(e) {
 
         console.log("Applying Custom Headers:", headerMap);
 
-        player.getNetworkingEngine().registerRequestFilter((type, request) => {
-            // Automatically append token to segment requests if it's in the base URL
-            const baseUri = document.getElementById('streamUrl').value;
-            let tokenToAppend = null;
+        // player.getNetworkingEngine().registerRequestFilter((type, request) => {
+        //     // Automatically append token to segment requests if it's in the base URL
+        //     const baseUri = document.getElementById('streamUrl').value;
+        //     let tokenToAppend = null;
             
-            if (baseUri.includes('hdnea=')) {
-                tokenToAppend = 'hdnea=' + baseUri.split('hdnea=')[1].split('&')[0];
-            } else if (baseUri.includes('__hdnea__=')) {
-                tokenToAppend = '__hdnea__=' + baseUri.split('__hdnea__=')[1].split('&')[0];
-            } else if (baseUri.includes('hdntl=')) {
-                tokenToAppend = 'hdntl=' + baseUri.split('hdntl=')[1].split('&')[0];
-            }
+        //     if (baseUri.includes('hdnea=')) {
+        //         tokenToAppend = 'hdnea=' + baseUri.split('hdnea=')[1].split('&')[0];
+        //     } else if (baseUri.includes('__hdnea__=')) {
+        //         tokenToAppend = '__hdnea__=' + baseUri.split('__hdnea__=')[1].split('&')[0];
+        //     } else if (baseUri.includes('hdntl=')) {
+        //         tokenToAppend = 'hdntl=' + baseUri.split('hdntl=')[1].split('&')[0];
+        //     }
 
-            if (tokenToAppend && (type === shaka.net.NetworkingEngine.RequestType.SEGMENT || type === shaka.net.NetworkingEngine.RequestType.MANIFEST)) {
-                if (!request.uris[0].includes('hdnea') && !request.uris[0].includes('hdntl')) {
-                    const sep = request.uris[0].includes("?") ? "&" : "?";
-                    request.uris[0] += sep + tokenToAppend;
-                }
-            }
+        //     if (tokenToAppend && (type === shaka.net.NetworkingEngine.RequestType.SEGMENT || type === shaka.net.NetworkingEngine.RequestType.MANIFEST)) {
+        //         if (!request.uris[0].includes('hdnea') && !request.uris[0].includes('hdntl')) {
+        //             const sep = request.uris[0].includes("?") ? "&" : "?";
+        //             request.uris[0] += sep + tokenToAppend;
+        //         }
+        //     }
 
             // Apply all parsed headers to the request
             for (const [key, value] of Object.entries(headerMap)) {
